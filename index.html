@@ -27,7 +27,8 @@
         <div class="end">
             <b>Number of Tries: <ins id="count">0</ins></b>
             <button type="button" onclick="newGame()" onhover><b>New Game</b></button>
-        </div>
+		</div>
+		
         <script>
             var t1 = document.getElementById("t1");
             var t2 = document.getElementById("t2");
@@ -52,7 +53,7 @@
             
             function newGame(){
                 c=0;
-                h.innerHTML = "<h2>THE GREAT</h2><h1 id=\"clue\"></h1><h2>GUESSING GAME</h2>"
+				h.innerHTML = "<h2>THE GREAT</h2><h1 id=\"clue\"></h1><h2>GUESSING GAME</h2>"
 
                 t1.style.background = getRandomColor();
                 t2.style.background = getRandomColor();
@@ -92,7 +93,6 @@
                     document.getElementById("count").innerHTML = ++c;
                     h.innerHTML = `<h1>YOU GOT IT IN ${c} TRIES!</h1>`;
                     for(let i=0; i<tiles.length; i++) tiles[i].style.background = correctColor;
-                    h.style.background = correctColor;
                 } else {
                     document.getElementById("count").innerHTML = ++c;
                 }
