@@ -1,67 +1,102 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
-    <title>Color Game</title>
-    <link rel="stylesheet" href="./index.css" />
-  </head>
-  <body onload="newGame()">
-    <div id="header">
-      <h2>The Great</h2>
-      <h1 id="header-clue">rgb(xxx,xxx,xxx)</h1>
-      <h2>Guessing Game</h2>
-    </div>
-    <div id="container">
-      <div class="tile" id="1"></div>
-      <div class="tile" id="2"></div>
-    </div>
+    <head>
+        <title>Color Game</title>
+        <link rel="stylesheet" href="./index.css" />
+    </head>
 
-    <script>
-      var t1 = document.getElementById("1");
-      var t2 = document.getElementById("2");
-      var x;
-      var correctColor;
+    <body onload="newGame()">
+        <header id="h">
+            <h2>THE GREAT</h2>
+            <h1 id="clue"></h1>
+            <h2>GUESSING GAME</h2>
+        </header>
+        <div class="container column">
+            <div class="container row">
+                <div class="tile" id="t1" onclick="check(1)"></div>
+                <div class="tile" id="t2" onclick="check(2)"></div>
+                <div class="tile" id="t3" onclick="check(3)"></div>
+            </div>
+            <div class="container row">
+                <div class="tile" id="t4" onclick="check(4)"></div>
+                <div class="tile" id="t5" onclick="check(5)"></div>
+                <div class="tile" id="t6" onclick="check(6)"></div>
+            </div>
+        </div>
+        <div class="end">
+            <b>Number of Tries: <ins id="count">0</ins></b>
+            <button type="button" onclick="newGame()" onhover><b>New Game</b></button>
+        </div>
+        <script>
+            var t1 = document.getElementById("t1");
+            var t2 = document.getElementById("t2");
+            var t3 = document.getElementById("t3");
+            var t4 = document.getElementById("t4");
+            var t5 = document.getElementById("t5");
+            var t6 = document.getElementById("t6");
+            var h = document.getElementById("h");
+            var tiles = document.getElementsByClassName("tile");
+            var x;
+            var c;
+            var correctColor;
 
-      function getRandomColor() {
-        var letters = "0123456789ABCDEF";
-        var color = "#";
-        for (var i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-      }
+            function getRandomColor(){
+                var letters = "0123456789ABCDEF";
+                var color = "#";
+                for (let i=0; i<6; i++){
+                    color += letters[Math.floor(Math.random()*16)];
+                }
+                return color;
+            }
+            
+            function newGame(){
+                c=0;
+                h.innerHTML = "<h2>THE GREAT</h2><h1 id=\"clue\"></h1><h2>GUESSING GAME</h2>"
 
-      function newGame() {
-        t1.style.background = getRandomColor();
-        t2.style.background = getRandomColor();
+                t1.style.background = getRandomColor();
+                t2.style.background = getRandomColor();
+                t3.style.background = getRandomColor();
+                t4.style.background = getRandomColor();
+                t5.style.background = getRandomColor();
+                t6.style.background = getRandomColor();
 
-        x = Math.floor(Math.random() * 2 + 1);
+                x = Math.floor(Math.random()*6 + 1);
 
-        if (x == 1) correctColor = t1.style.background;
-        else correctColor = t2.style.background;
-        /* console.log(x);
-        console.log(correctColor); */
+                switch(x){
+                    case 1:
+                        correctColor = t1.style.background;
+                        break;
+                    case 2:
+                        correctColor = t2.style.background;
+                        break;
+                    case 3:
+                        correctColor = t3.style.background;
+                        break;
+                    case 4:
+                        correctColor = t4.style.background;
+                        break;
+                    case 5: 
+                        correctColor = t5.style.background;
+                        break;
+                    case 6: 
+                        correctColor = t6.style.background;
+                        break;
+                }
 
-        document.getElementById("header-clue").innerHTML = correctColor;
-      }
+                document.getElementById("clue").innerHTML = correctColor;
+            }
 
-      t1.addEventListener("click", function () {
-        if (t1.style.background == correctColor) {
-          t2.style.background = correctColor;
-          document.getElementById("header").style.background = correctColor;
-        } else {
-          t1.style.background = "black";
-        }
-      });
-
-      t2.addEventListener("click", function () {
-        if (t2.style.background == correctColor) {
-          t1.style.background = correctColor;
-          document.getElementById("header").style.background = correctColor;
-        } else {
-          t2.style.background = "black";
-        }
-      });
-    </script>
-  </body>
+            function check(i){
+                if (x==i){
+                    document.getElementById("count").innerHTML = ++c;
+                    h.innerHTML = `<h1>YOU GOT IT IN ${c} TRIES!</h1>`;
+                    for(let i=0; i<tiles.length; i++) tiles[i].style.background = correctColor;
+                    h.style.background = correctColor;
+                } else {
+                    document.getElementById("count").innerHTML = ++c;
+                }
+            }
+        </script>
+    </body>
 </html>
